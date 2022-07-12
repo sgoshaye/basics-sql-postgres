@@ -15,10 +15,10 @@ CORRELATED SUBQUERY RUN FOR EVERY SINGLE RECORD OF THE OUTER QUERY
 SELECT first_name, salary
 FROM employees e1
 WHERE salary > (SELECT round(AVG(salary))
-			   FROM employees e2 WHERE e1.department = e2.department);
+		FROM employees e2 WHERE e1.department = e2.department);
 
 -- ALSO CAN DO IT THIS WAY
 
 SELECT first_name, salary, department, (SELECT round(AVG(salary))
-										FROM employees e2 WHERE e1.department = e2.department) as avg_department_salary 
+					FROM employees e2 WHERE e1.department = e2.department) as avg_department_salary 
 FROM employees e1;
