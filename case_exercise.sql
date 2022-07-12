@@ -7,14 +7,14 @@ the total supply is between 20,000 and 50,000. If the total supply is greater th
 then that fruit falls in the full category.
 */
 
-SELECT name, total_supply,
+SELECT name, total_supply, 
        CASE WHEN total_supply < 20000 THEN 'LOW'
-	        WHEN total_supply >= 20000 AND total_supply <= 50000 THEN 'ENOUGH'
+	    WHEN total_supply >= 20000 AND total_supply <= 50000 THEN 'ENOUGH'
             WHEN total_supply > 50000 THEN 'FULL'
        END as category
        FROM (SELECT name, sum(supply) total_supply
-			 FROM fruit_imports
-			 GROUP BY name) a
+	     FROM fruit_imports
+	     GROUP BY name) a
 			 
 /* 
 2. 
@@ -35,5 +35,5 @@ SELECT SUM(CASE WHEN season = 'Winter' THEN total_cost end) as Winter_total,
 	   SUM(CASE WHEN season = 'Fall' THEN total_cost end) as Spring_total,
 	   SUM(CASE WHEN season = 'All Year' THEN total_cost end) as All_Year
 FROM (SELECT season, SUM(supply * cost_per_unit) total_cost
-	  FROM fruit_imports
-	  GROUP BY season) a
+      FROM fruit_imports
+      GROUP BY season) a
