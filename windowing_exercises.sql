@@ -6,20 +6,18 @@ I also want to see number of employees partitioned by region.
 */
 
 SELECT employees.first_name, employees.department, 
-	COUNT(*) OVER(PARTITION BY employees.department) dept_count,
-	regions.region,
-	COUNT(*) OVER(PARTITION BY employees.region_id) region_count
+       COUNT(*) OVER(PARTITION BY employees.department) dept_count,
+       regions.region,
+       COUNT(*) OVER(PARTITION BY employees.region_id) region_count
 FROM employees
-LEFT JOIN regions 
-ON employees.region_id = regions.region_id;
+LEFT JOIN regions ON employees.region_id = regions.region_id;
 
 /*
 2. 
 Give running total of salaries partitioned by department.
 */
 
-SELECT first_name, hire_date, 
-SUM(salary) OVER(PARTITION BY department ORDER BY hire_date) as running_total_of_salaries 
+SELECT first_name, hire_date, SUM(salary) OVER(PARTITION BY department ORDER BY hire_date) as running_total_of_salaries 
 FROM employees;
 
 /*
@@ -29,8 +27,7 @@ EACH department ranked as seventh largest salary.
 */
 
 SELECT * FROM (SELECT first_name, department, salary,
-			   RANK() OVER(PARTITION BY department ORDER BY salary DESC)
-			   FROM employees) s
+	       RANK() OVER(PARTITION BY department ORDER BY salary DESC) FROM employees) s
 WHERE rank = 7;
 
 /*
@@ -38,8 +35,7 @@ WHERE rank = 7;
 Split each department into 5 salary brackets.
 */
 
-SELECT first_name, department, salary,
-NTILE(5) OVER(PARTITION BY department ORDER BY salary DESC) as salary_bracket
+SELECT first_name, department, salary, NTILE(5) OVER(PARTITION BY department ORDER BY salary DESC) as salary_bracket
 FROM employees;
 
 /*
