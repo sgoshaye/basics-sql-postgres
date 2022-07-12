@@ -23,11 +23,11 @@ HINT: Using the DISTINCT keyword will not help. :-)
 
 SELECT student_name, course_number, min(professor)
 FROM (SELECT student_name, courses.course_no course_number, teach.last_name as 	professor
-	  FROM students JOIN student_enrollment
-	  ON students.student_no = student_enrollment.student_no
-	  JOIN courses ON courses.course_no = student_enrollment.course_no
-	  JOIN teach ON teach.course_no = courses.course_no
-	  ORDER BY student_name) m
+      FROM students JOIN student_enrollment
+      ON students.student_no = student_enrollment.student_no
+      JOIN courses ON courses.course_no = student_enrollment.course_no
+      JOIN teach ON teach.course_no = courses.course_no
+      ORDER BY student_name) m
 GROUP BY student_name, course_number
 ORDER BY student_name, course_number;
 
@@ -55,8 +55,8 @@ is above average for their given department.
 SELECT first_name
 FROM employees outer_emp
 WHERE salary > (SELECT AVG(salary)
-				FROM employees
-      			WHERE department = outer_emp.department);
+		FROM employees
+      		WHERE department = outer_emp.department);
 
 /* 
 5.
